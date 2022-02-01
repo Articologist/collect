@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block meta %}
-    {% if context == 'user'  %}
+    {% if context == 'shared'  %}
         {{ include('App/_partials/_meta.html.twig', {
             'title': renderTitle(breadcrumb),
             'description': 'menu.collections_user'|trans({'%username%':  app.request.get('username')}),
@@ -36,8 +36,8 @@
                 <div class="right">
                     <h1>{{ album.title }}</h1>
                     <ul class="nav nav-pills">
-                        <li>{{ 'counter.photo'|trans({'%count%': getCounters(album).items}) }}</li>
-                        <li>{{ 'counter.album'|trans({'%count%': getCounters(album).children}) }}</li>
+                        <li>{{ 'counter.photo'|trans({'%count%': getElementsCounter(album)}) }}</li>
+                        <li>{{ 'counter.album'|trans({'%count%': getChildrenCounter(album)}) }}</li>
                     </ul>
                 </div>
                 <div class="clearfix"></div>
@@ -125,7 +125,7 @@
 
 {% block modals %}
     {% if context == 'default' %}
-        {{ include('App/_partials/_modal/_share.html.twig', {'entity': album, 'route': url('app_user_album_show', {id: album.id, username: app.user.username})}) }}
+        {{ include('App/_partials/_modal/_share.html.twig', {'entity': album, 'route': url('app_shared_album_show', {id: album.id, username: app.user.username})}) }}
         {{ include('App/_partials/_modal/_delete.html.twig', {'id': 'delete', 'route': path('app_album_delete', {id: album.id}), transKey: 'message.delete.album'}) }}
         {% for photo in photos %}
             {{ include('App/_partials/_modal/_delete.html.twig', {'id': 'delete-' ~ photo.id , 'route': path('app_photo_delete', {id: photo.id}), transKey: 'message.delete.photo'}) }}

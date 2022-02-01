@@ -6,7 +6,6 @@ namespace App\Entity;
 
 use App\Annotation\Upload;
 use App\Entity\Interfaces\BreadcrumbableInterface;
-use App\Entity\Interfaces\CacheableInterface;
 use App\Entity\Interfaces\LoggableInterface;
 use App\Enum\VisibilityEnum;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -23,7 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     @ORM\Index(name="idx_collection_visibility", columns={"visibility"})
  * })
  */
-class Collection implements LoggableInterface, BreadcrumbableInterface, CacheableInterface
+class Collection implements LoggableInterface, BreadcrumbableInterface
 {
     /**
      * @ORM\Id
@@ -101,6 +100,11 @@ class Collection implements LoggableInterface, BreadcrumbableInterface, Cacheabl
     private string $visibility;
 
     /**
+     * @ORM\Column(type="json")
+     */
+    private array $counters;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private ?\DateTimeInterface $createdAt = null;
@@ -118,6 +122,7 @@ class Collection implements LoggableInterface, BreadcrumbableInterface, Cacheabl
         $this->data = new ArrayCollection();
         $this->visibility = VisibilityEnum::VISIBILITY_PUBLIC;
         $this->seenCounter = 0;
+        $this->counters = [];
     }
 
     public function __toString(): string
@@ -368,6 +373,18 @@ class Collection implements LoggableInterface, BreadcrumbableInterface, Cacheabl
                 $data->setCollection(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCounters(): array
+    {
+        return $this->counters;
+    }
+
+    public function setCounters(array $counters): Collection
+    {
+        $this->counters = $counters;
 
         return $this;
     }

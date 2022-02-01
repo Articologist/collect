@@ -18,7 +18,7 @@ services:
             - DB_PORT=5432
             - DB_USER=postgres
             - DB_PASSWORD=m6iFpZTkR1U6klSvLtRF
-            - DB_VERSION=8
+            - DB_VERSION=14
             - PHP_TZ=Europe/Paris
             - HTTPS_ENABLED=0
         depends_on:
@@ -47,7 +47,6 @@ services:
         environment:
             - MYSQL_ROOT_PASSWORD=m6iFpZTkR1U6klSvLtRF
             - MYSQL_DATABASE=koillection
-
         ports:
             - 3306:3306
         volumes:
@@ -61,3 +60,12 @@ services:
             PGADMIN_DEFAULT_PASSWORD: root
         ports:
             - "8080:80"
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        ports:
+            - "8081:80"
+        links:
+            - mysql
+        environment:
+            - PMA_HOST=mysql

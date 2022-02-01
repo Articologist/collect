@@ -30,7 +30,7 @@ class Log
     private ?\DateTimeInterface $loggedAt = null;
 
     /**
-     * @ORM\Column(type="uuid")
+     * @ORM\Column(type="string")
      */
     private string $objectId;
 

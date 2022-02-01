@@ -6,7 +6,6 @@ namespace App\Entity;
 
 use App\Annotation\Upload;
 use App\Entity\Interfaces\BreadcrumbableInterface;
-use App\Entity\Interfaces\CacheableInterface;
 use App\Entity\Interfaces\LoggableInterface;
 use App\Enum\VisibilityEnum;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -22,7 +21,7 @@ use Symfony\Component\Uid\Uuid;
  *     @ORM\Index(name="idx_wishlist_visibility", columns={"visibility"})
  * })
  */
-class Wishlist implements BreadcrumbableInterface, CacheableInterface, LoggableInterface
+class Wishlist implements BreadcrumbableInterface, LoggableInterface
 {
     /**
      * @ORM\Id
@@ -83,6 +82,11 @@ class Wishlist implements BreadcrumbableInterface, CacheableInterface, LoggableI
     private string $visibility;
 
     /**
+     * @ORM\Column(type="json")
+     */
+    private array $counters;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private ?\DateTimeInterface $createdAt = null;
@@ -99,6 +103,7 @@ class Wishlist implements BreadcrumbableInterface, CacheableInterface, LoggableI
         $this->children = new ArrayCollection();
         $this->visibility = VisibilityEnum::VISIBILITY_PUBLIC;
         $this->seenCounter = 0;
+        $this->counters = [];
     }
 
     public function __toString(): string
@@ -287,6 +292,18 @@ class Wishlist implements BreadcrumbableInterface, CacheableInterface, LoggableI
         if ($file instanceof UploadedFile) {
             $this->setUpdatedAt(new \DateTime());
         }
+
+        return $this;
+    }
+
+    public function getCounters(): array
+    {
+        return $this->counters;
+    }
+
+    public function setCounters(array $counters): Wishlist
+    {
+        $this->counters = $counters;
 
         return $this;
     }

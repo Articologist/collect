@@ -16,18 +16,17 @@ final class UploadListener
         private ImageHandler $handler
     ) {}
 
-    public function prePersist(LifecycleEventArgs $args)
-    {
-        $entity = $args->getEntity();
-        foreach ($this->reader->getUploadFields($entity) as $property => $annotation) {
-            $this->handler->upload($entity, $property, $annotation);
-        }
-    }
-
     public function onFlush(OnFlushEventArgs $args)
     {
         $em = $args->getEntityManager();
         $uow = $em->getUnitOfWork();
+
+        foreach ($uow->getScheduledEntityInsertions() as $entity) {
+            foreach ($this->reader->getUploadFields($entity) as $property => $annotation) {
+                $this->handler->upload($entity, $property, $annotation);
+                $uow->recomputeSingleEntityChangeSet($em->getClassMetadata(get_class($entity)), $entity);
+            }
+        }
 
         foreach ($uow->getScheduledEntityUpdates() as $entity) {
             foreach ($this->reader->getUploadFields($entity) as $property => $annotation) {

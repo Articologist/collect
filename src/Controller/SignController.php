@@ -16,7 +16,7 @@ class SignController extends AbstractController
     )]
     #[Route(
         path: ['en' => '/user/{username}/signs', 'fr' => '/utilisateur/{username}/dedicaces'],
-        name: 'app_user_sign_index', methods: ['GET']
+        name: 'app_shared_sign_index', methods: ['GET']
     )]
     public function index(DatumRepository $datumRepository) : Response
     {

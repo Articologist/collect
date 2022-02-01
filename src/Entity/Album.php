@@ -6,7 +6,6 @@ namespace App\Entity;
 
 use App\Annotation\Upload;
 use App\Entity\Interfaces\BreadcrumbableInterface;
-use App\Entity\Interfaces\CacheableInterface;
 use App\Entity\Interfaces\LoggableInterface;
 use App\Enum\VisibilityEnum;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -22,7 +21,7 @@ use Symfony\Component\Uid\Uuid;
  *     @ORM\Index(name="idx_album_visibility", columns={"visibility"})
  * })
  */
-class Album implements BreadcrumbableInterface, LoggableInterface, CacheableInterface
+class Album implements BreadcrumbableInterface, LoggableInterface
 {
     /**
      * @ORM\Id
@@ -82,6 +81,11 @@ class Album implements BreadcrumbableInterface, LoggableInterface, CacheableInte
     private string $visibility;
 
     /**
+     * @ORM\Column(type="json")
+     */
+    private array $counters;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private ?\DateTimeInterface $createdAt = null;
@@ -98,6 +102,7 @@ class Album implements BreadcrumbableInterface, LoggableInterface, CacheableInte
         $this->photos = new ArrayCollection();
         $this->children = new ArrayCollection();
         $this->visibility = VisibilityEnum::VISIBILITY_PUBLIC;
+        $this->counters = [];
     }
 
     public function __toString(): string
@@ -286,6 +291,18 @@ class Album implements BreadcrumbableInterface, LoggableInterface, CacheableInte
         if ($file instanceof UploadedFile) {
             $this->setUpdatedAt(new \DateTime());
         }
+
+        return $this;
+    }
+
+    public function getCounters(): array
+    {
+        return $this->counters;
+    }
+
+    public function setCounters(array $counters): Album
+    {
+        $this->counters = $counters;
 
         return $this;
     }

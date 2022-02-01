@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block meta %}
-    {% if context == 'user'  %}
+    {% if context == 'shared'  %}
         {{ include('App/_partials/_meta.html.twig', {
             'title': renderTitle(breadcrumb),
             'description': 'menu.collections_user'|trans({'%username%':  app.request.get('username')}),
@@ -36,8 +36,8 @@
                 <div class="right">
                     <h1>{{ collection.title }}</h1>
                     <ul class="nav nav-pills">
-                        <li>{{ 'counter.item'|trans({'%count%': getCounters(collection).items}) }}</li>
-                        <li>{{ 'counter.collection'|trans({'%count%': getCounters(collection).children}) }}</li>
+                        <li>{{ 'counter.item'|trans({'%count%': getElementsCounter(collection)}) }}</li>
+                        <li>{{ 'counter.collection'|trans({'%count%': getChildrenCounter(collection)}) }}</li>
                     </ul>
                 </div>
                 <div class="clearfix"></div>
@@ -153,7 +153,7 @@
 
 {% block modals %}
     {% if context == 'default' %}
-        {{ include('App/_partials/_modal/_share.html.twig', {'entity': collection, 'route': url('app_user_collection_show', {id: collection.id, username: app.user.username})}) }}
+        {{ include('App/_partials/_modal/_share.html.twig', {'entity': collection, 'route': url('app_shared_collection_show', {id: collection.id, username: app.user.username})}) }}
         {{ include('App/_partials/_modal/_delete.html.twig', {'id': 'delete', 'route': path('app_collection_delete', {id: collection.id}), transKey: 'message.delete.collection'}) }}
     {% endif %}
 {% endblock %}

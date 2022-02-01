@@ -101,7 +101,9 @@ Please backup your database and /uploads folder before updating
 
 ### Using git or an archive file
 1. In the project root folder execute `bin/composer install --classmap-authoritative`
-2. Then `php bin/console doctrine:migrations:migrate`
+2. Execute the SQL migrations `php bin/console doctrine:migrations:migrate`
+3. Execute scheduled tasks : `koillection:scheduled-tasks:execute`
+4. Compile assets : `cd assets/ && yarn build`
 
 ### Using Docker
 Just pulling the new image and restarting the container should be enough

@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block meta %}
-    {% if context == 'user'  %}
+    {% if context == 'shared'  %}
         {{ include('App/_partials/_meta.html.twig', {
             'title': 'menu.collections_user'|trans({'%username%':  app.request.get('username')}),
             'description': 'menu.collections_user'|trans({'%username%':  app.request.get('username')})
@@ -27,8 +27,8 @@
             <div class="title-block">
                 <h1>{{ 'menu.collections'|trans }}</h1>
                 <ul class="nav nav-pills">
-                    <li>{{ 'counter.item'|trans({'%count%': getCounters('collections').items}) }}</li>
-                    <li>{{ 'counter.collection'|trans({'%count%': getCounters('collections').children}) }}</li>
+                    <li>{{ 'counter.item'|trans({'%count%': getElementsCounter(collections) }) }}</li>
+                    <li>{{ 'counter.collection'|trans({'%count%': getChildrenCounter(collections) + collections|length }) }}</li>
                 </ul>
             </div>
 
@@ -60,7 +60,7 @@
 
 {% block modals %}
     {% if context == 'default' %}
-        {{ include('App/_partials/_modal/_share.html.twig', {'route': url('app_user_collection_index', {username: app.user.username})}) }}
+        {{ include('App/_partials/_modal/_share.html.twig', {'route': url('app_shared_collection_index', {username: app.user.username})}) }}
     {% endif %}
 {% endblock %}
 

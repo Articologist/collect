@@ -33,7 +33,7 @@ class RegenerateThumbnailsCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('app:regenerate-thumbnails')
+            ->setName('koillection:task:regenerate-thumbnails')
             ->setDescription('Regenerate thumbnails')
         ;
     }

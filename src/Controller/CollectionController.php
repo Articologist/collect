@@ -25,11 +25,11 @@ class CollectionController extends AbstractController
     )]
     #[Route(
         path: ['en' => '/user/{username}/collections', 'fr' => '/utilisateur/{username}/collections'],
-        name: 'app_user_collection_index', methods: ['GET']
+        name: 'app_shared_collection_index', methods: ['GET']
     )]
     #[Route(
         path: ['en' => '/user/{username}', 'fr' => '/utilisateur/{username}'],
-        name: 'app_user_homepage', methods: ['GET']
+        name: 'app_shared_homepage', methods: ['GET']
     )]
     public function index(CollectionRepository $collectionRepository) : Response
     {
@@ -84,7 +84,7 @@ class CollectionController extends AbstractController
     )]
     #[Route(
         path: ['en' => '/user/{username}/{id}', 'fr' => '/utilisateur/{username}/{id}'],
-        name: 'app_user_collection_show', requirements: ['id' => '%uuid_regex%'],  methods: ['GET']
+        name: 'app_shared_collection_show', requirements: ['id' => '%uuid_regex%'],  methods: ['GET']
     )]
     public function show(Collection $collection, CollectionRepository $collectionRepository, ItemRepository $itemRepository) : Response
     {
@@ -101,7 +101,7 @@ class CollectionController extends AbstractController
     )]
     #[Route(
         path: ['en' => '/user/{username}/{id}/items', 'fr' => '/utilisateur/{username}/{id}/objets'],
-        name: 'app_user_collection_items', requirements: ['id' => '%uuid_regex%'],  methods: ['GET']
+        name: 'app_shared_collection_items', requirements: ['id' => '%uuid_regex%'],  methods: ['GET']
     )]
     public function items(Collection $collection, ItemRepository $itemRepository) : Response
     {

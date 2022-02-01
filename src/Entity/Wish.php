@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Annotation\Upload;
-use App\Entity\Interfaces\CacheableInterface;
 use App\Enum\VisibilityEnum;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
@@ -18,7 +17,7 @@ use Symfony\Component\Uid\Uuid;
  *     @ORM\Index(name="idx_wish_visibility", columns={"visibility"})
  * })
  */
-class Wish implements CacheableInterface
+class Wish
 {
     /**
      * @ORM\Id

@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block meta %}
-    {% if context == 'user'  %}
+    {% if context == 'shared'  %}
         {{ include('App/_partials/_meta.html.twig', {
             'title': renderTitle(breadcrumb),
             'description': 'menu.collections_user'|trans({'%username%':  app.request.get('username')}),
@@ -137,7 +137,7 @@
 
 {% block modals %}
     {% if context == 'default' %}
-        {{ include('App/_partials/_modal/_share.html.twig', {'entity': tag, 'route': url('app_user_tag_show', {id: tag.id, username: app.user.username})}) }}
+        {{ include('App/_partials/_modal/_share.html.twig', {'entity': tag, 'route': url('app_shared_tag_show', {id: tag.id, username: app.user.username})}) }}
         {{ include('App/_partials/_modal/_delete.html.twig', {'id': 'delete', 'route': path('app_tag_delete', {id: tag.id}), transKey: 'message.delete.tag'}) }}
     {% endif %}
 {% endblock %}

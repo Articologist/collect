@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class CleanUpCommand extends Command
+class DeleteUnusedImagesCommand extends Command
 {
     public function __construct(
         private ManagerRegistry $managerRegistry,
@@ -22,7 +22,7 @@ class CleanUpCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('app:clean-up')
+            ->setName('koillection:task:delete-unused-images')
             ->setDescription('Delete unused images')
         ;
     }
